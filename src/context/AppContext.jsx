@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback } from 'react'
+import { createContext, useContext, useState, useCallback, useEffect } from 'react'
 import useLocalStorage from '../hooks/useLocalStorage.js'
 import {
   siteSettings as defaultSiteSettings,
@@ -6,6 +6,7 @@ import {
   articles as defaultArticles,
   testimonials as defaultTestimonials,
   contactMessages as defaultMessages,
+  companyInfo as defaultCompanyInfo,
   adminCredentials,
 } from '../data/sampleData.js'
 
@@ -19,6 +20,17 @@ export function AppProvider({ children }) {
   const [articles, setArticles] = useLocalStorage('qa-articles', defaultArticles)
   const [testimonials, setTestimonials] = useLocalStorage('qa-testimonials', defaultTestimonials)
   const [contactMessages, setContactMessages] = useLocalStorage('qa-messages', defaultMessages)
+  const [companyInfo, setCompanyInfo] = useLocalStorage('qa-company', defaultCompanyInfo)
+
+  // Theme - sync to DOM
+  useEffect(() => {
+    const root = document.documentElement
+    if (theme === 'dark') {
+      root.classList.add('dark')
+    } else {
+      root.classList.remove('dark')
+    }
+  }, [theme])
 
   // Theme
   const toggleTheme = useCallback(() => {
@@ -154,6 +166,45 @@ export function AppProvider({ children }) {
     [setContactMessages]
   )
 
+  // Company Info CRUD
+  const updateCompanyInfo = useCallback(
+    (updates) => {
+      setCompanyInfo((prev) => ({ ...prev, ...updates }))
+    },
+    [setCompanyInfo]
+  )
+
+  const addLicense = useCallback(
+    (license) => {
+      const newLicense = { ...license, id: Date.now() }
+      setCompanyInfo((prev) => ({
+        ...prev,
+        licenses: [...prev.licenses, newLicense],
+      }))
+    },
+    [setCompanyInfo]
+  )
+
+  const updateLicense = useCallback(
+    (id, updates) => {
+      setCompanyInfo((prev) => ({
+        ...prev,
+        licenses: prev.licenses.map((l) => (l.id === id ? { ...l, ...updates } : l)),
+      }))
+    },
+    [setCompanyInfo]
+  )
+
+  const deleteLicense = useCallback(
+    (id) => {
+      setCompanyInfo((prev) => ({
+        ...prev,
+        licenses: prev.licenses.filter((l) => l.id !== id),
+      }))
+    },
+    [setCompanyInfo]
+  )
+
   // Reset all data
   const resetAllData = useCallback(() => {
     setSiteSettings(defaultSiteSettings)
@@ -161,7 +212,8 @@ export function AppProvider({ children }) {
     setArticles(defaultArticles)
     setTestimonials(defaultTestimonials)
     setContactMessages(defaultMessages)
-  }, [setSiteSettings, setPortfolioProjects, setArticles, setTestimonials, setContactMessages])
+    setCompanyInfo(defaultCompanyInfo)
+  }, [setSiteSettings, setPortfolioProjects, setArticles, setTestimonials, setContactMessages, setCompanyInfo])
 
   const value = {
     theme,
@@ -187,6 +239,11 @@ export function AppProvider({ children }) {
     addContactMessage,
     updateMessageStatus,
     deleteMessage,
+    companyInfo,
+    updateCompanyInfo,
+    addLicense,
+    updateLicense,
+    deleteLicense,
     resetAllData,
   }
 

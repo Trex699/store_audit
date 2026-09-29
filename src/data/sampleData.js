@@ -1,6 +1,39 @@
 // Sample Data for QA Store Audit Website
 // ข้อมูลตัวอย่างทั้งหมดสำหรับเว็บไซต์
 
+export const companyInfo = {
+  companyName: 'QA Store Audit Co., Ltd.',
+  address: '123 อาคารสำนักงาน ชั้น 10 ถนนสุขุมวิท แขวงคลองเตย เขตคลองเตย กรุงเทพฯ 10110',
+  addressDetail: 'สำนักงานใหญ่',
+  phone: '02-123-4567',
+  email: 'info@qastoreaudit.com',
+  licenses: [
+    {
+      id: 1,
+      name: 'ใบอนุญาตประกอบกิจการ',
+      description: 'ใบอนุญาตประกอบธุรกิจตามกฎหมาย',
+      image: 'https://placehold.co/400x300/1a1a1a/D4A017?text=License+1',
+    },
+    {
+      id: 2,
+      name: 'ใบรับรองมาตรฐาน ISO 9001',
+      description: 'ใบรับรองระบบบริหารคุณภาพ',
+      image: 'https://placehold.co/400x300/1a1a1a/D4A017?text=ISO+9001',
+    },
+    {
+      id: 3,
+      name: 'ใบอนุญาตด้านความปลอดภัย',
+      description: 'ใบอนุญาตด้านความปลอดภัยข้อมูล',
+      image: 'https://placehold.co/400x300/1a1a1a/D4A017?text=Security+License',
+    },
+  ],
+  map: {
+    lat: 13.7234,
+    lng: 100.5678,
+    zoom: 15,
+  },
+}
+
 export const adminCredentials = {
   email: 'admin@qastoreaudit.com',
   password: 'admin1234',
@@ -11,7 +44,7 @@ export const siteSettings = {
   heroTitle: 'เจ้าหน้าที่กำกับดูแลตลาดออนไลน์',
   heroSubtitle: 'Marketplace Compliance & Store Audit Specialist',
   heroDescription: 'ช่วยให้ร้านค้าของคุณผ่านเกณฑ์ตรวจสอบ ปลอดภัยจากการระงับบัญชี และพร้อมเติบโตบนแพลตฟอร์มอีคอมเมิร์ซชั้นนำ',
-  contactPhone: '081-234-5678',
+  contactPhone: '081-000-0000',
   contactEmail: 'contact@qastoreaudit.com',
   lineUrl: 'https://line.me/ti/p/qastoreaudit',
   lineId: '@qastoreaudit',
@@ -25,7 +58,7 @@ export const siteSettings = {
 export const stats = [
   { value: '500+', label: 'ร้านค้าที่ตรวจสอบ' },
   { value: '98%', label: 'อัตราผ่านการตรวจ' },
-  { value: '3 ปี', label: 'ประสบการณ์' },
+  { value: '3 ปี', label: 'ปีประสบการณ์' },
   { value: '24 ชม.', label: 'เวลาตอบกลับ' },
 ]
 

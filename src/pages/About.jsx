@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Award, Briefcase, GraduationCap, CheckCircle2 } from 'lucide-react'
+import { useLanguage } from '../context/LanguageContext.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
 
 const workHistory = [
@@ -58,6 +59,8 @@ const expertise = [
 ]
 
 function PageHero() {
+  const { t } = useLanguage()
+
   return (
     <section className="py-20 bg-gradient-to-br from-dark-800 via-dark-700 to-dark-600">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -67,11 +70,10 @@ function PageHero() {
           transition={{ duration: 0.6 }}
         >
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            เกี่ยวกับ <span className="text-gold-500">ผม</span>
+            {t('about_title')} <span className="text-gold-500">ผม</span>
           </h1>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            เจ้าหน้าที่กำกับดูแลกฎระเบียบและความปลอดภัยบนแพลตฟอร์มตลาดออนไลน์
-            ที่มุ่งมั่นช่วยให้ร้านค้าของคุณปลอดภัยและเติบโต
+            {t('about_subtitle')}
           </p>
         </motion.div>
       </div>
@@ -80,13 +82,15 @@ function PageHero() {
 }
 
 function WorkHistorySection() {
+  const { t } = useLanguage()
+
   return (
     <section className="py-20 bg-white dark:bg-dark-700">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          title="ประวัติการทำงาน"
+          title={t('about_experience')}
           highlight="Experience"
-          subtitle="ประสบการณ์การทำงานที่สร้างความเชื่อถือ"
+          subtitle={t('about_experience_subtitle')}
         />
 
         <div className="space-y-8">
@@ -130,13 +134,15 @@ function WorkHistorySection() {
 }
 
 function CertificationsSection() {
+  const { t } = useLanguage()
+
   return (
     <section className="py-20 bg-gray-50 dark:bg-dark-600">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          title="ใบอนุญาต"
+          title={t('about_certifications')}
           highlight="Certifications"
-          subtitle="คุณวุฒิและใบรับรองที่ได้รับ"
+          subtitle={t('about_certifications_subtitle')}
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -174,13 +180,15 @@ function CertificationsSection() {
 }
 
 function ExpertiseSection() {
+  const { t } = useLanguage()
+
   return (
     <section className="py-20 bg-white dark:bg-dark-700">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          title="ความเชี่ยวชาญ"
+          title={t('about_expertise')}
           highlight="Expertise"
-          subtitle="ทักษะและความเชี่ยวชาญที่ผมมี"
+          subtitle={t('about_expertise_subtitle')}
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -204,13 +212,15 @@ function ExpertiseSection() {
 }
 
 function EducationSection() {
+  const { t } = useLanguage()
+
   return (
     <section className="py-20 bg-gray-50 dark:bg-dark-600">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          title="การศึกษา"
+          title={t('about_education')}
           highlight="Education"
-          subtitle="พื้นฐานการศึกษาที่แข็งแกร่ง"
+          subtitle={t('about_education_subtitle')}
         />
 
         <motion.div

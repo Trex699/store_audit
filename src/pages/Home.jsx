@@ -11,6 +11,7 @@ import {
   Phone,
 } from 'lucide-react'
 import { useApp } from '../context/AppContext.jsx'
+import { useLanguage } from '../context/LanguageContext.jsx'
 import { stats, skills, services, auditChecklist } from '../data/sampleData.js'
 import SectionHeading from '../components/SectionHeading.jsx'
 
@@ -23,6 +24,7 @@ const iconMap = {
 
 function HeroSection() {
   const { siteSettings } = useApp()
+  const { t } = useLanguage()
 
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-dark-800 via-dark-700 to-dark-600 overflow-hidden">
@@ -60,7 +62,7 @@ function HeroSection() {
               to="/contact"
               className="inline-flex items-center gap-2 bg-gold-500 text-dark-700 px-8 py-4 rounded-lg font-semibold hover:bg-gold-400 transition-colors"
             >
-              ปรึกษาฟรี
+              {t('hero_cta')}
               <ArrowRight size={20} />
             </Link>
             <a
@@ -85,6 +87,8 @@ function HeroSection() {
 }
 
 function StatsSection() {
+  const { t } = useLanguage()
+
   return (
     <section className="py-16 bg-gold-500">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -111,13 +115,15 @@ function StatsSection() {
 }
 
 function SkillsSection() {
+  const { t } = useLanguage()
+
   return (
     <section className="py-20 bg-white dark:bg-dark-700">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          title="ทักษะหลัก"
-          highlight="Core Skills"
-          subtitle="ความเชี่ยวชาญด้านการตรวจสอบและควบคุมมาตรฐานร้านค้าออนไลน์"
+          title={t('skills_title')}
+          highlight={t('skills_highlight')}
+          subtitle={t('skills_subtitle')}
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -151,13 +157,15 @@ function SkillsSection() {
 }
 
 function ServicesPreview() {
+  const { t } = useLanguage()
+
   return (
     <section className="py-20 bg-gray-50 dark:bg-dark-600">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          title="บริการของเรา"
-          highlight="Services"
-          subtitle="แพ็กเกจบริการตรวจสอบที่ตอบโจทย์ทุกความต้องการ"
+          title={t('services_title')}
+          highlight={t('services_highlight')}
+          subtitle={t('services_subtitle')}
         />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -196,7 +204,7 @@ function ServicesPreview() {
             to="/services"
             className="inline-flex items-center gap-2 text-gold-500 font-semibold hover:text-gold-400 transition-colors"
           >
-            ดูรายละเอียดเพิ่มเติม
+            {t('services_view_more')}
             <ArrowRight size={20} />
           </Link>
         </div>
@@ -208,6 +216,7 @@ function ServicesPreview() {
 function AuditChecklistSection() {
   const [answers, setAnswers] = useState({})
   const [showResult, setShowResult] = useState(false)
+  const { t } = useLanguage()
 
   const handleChange = (id) => {
     setAnswers((prev) => ({ ...prev, [id]: !prev[id] }))
@@ -224,18 +233,18 @@ function AuditChecklistSection() {
   }
 
   const getResultText = () => {
-    if (percentage >= 80) return 'ร้านค้าของคุณมีมาตรฐานดีเยี่ยม!'
-    if (percentage >= 50) return 'ร้านค้าของคุณอยู่ในเกณฑ์ แต่ยังมีจุดที่ต้องปรับปรุง'
-    return 'ร้านค้าของคุณมีความเสี่ยงสูง ควรได้รับการตรวจสอบอย่างเร่งด่วน'
+    if (percentage >= 80) return t('audit_excellent')
+    if (percentage >= 50) return t('audit_good')
+    return t('audit_risk')
   }
 
   return (
     <section className="py-20 bg-white dark:bg-dark-700">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          title="ตรวจสอบร้านค้าของคุณ"
-          highlight="Self-Audit"
-          subtitle="ตอบคำถามง่ายๆ เพื่อประเมินมาตรฐานร้านค้าของคุณ (ไม่บันทึกข้อมูล)"
+          title={t('audit_title')}
+          highlight={t('audit_highlight')}
+          subtitle={t('audit_subtitle')}
         />
 
         <div className="space-y-4">
@@ -267,7 +276,7 @@ function AuditChecklistSection() {
             onClick={() => setShowResult(true)}
             className="bg-gold-500 text-dark-700 px-8 py-3 rounded-lg font-semibold hover:bg-gold-400 transition-colors"
           >
-            ดูผลการประเมิน
+            {t('audit_view_result')}
           </button>
         </div>
 
@@ -284,14 +293,14 @@ function AuditChecklistSection() {
               {getResultText()}
             </p>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              ตอบถูก {score} จาก {auditChecklist.length} ข้อ
+              {t('audit_score', { score, total: auditChecklist.length })}
             </p>
             {percentage < 80 && (
               <Link
                 to="/contact"
                 className="inline-flex items-center gap-2 mt-4 text-gold-500 font-semibold hover:text-gold-400 transition-colors"
               >
-                ปรึกษาผู้เชี่ยวชาญ
+                {t('audit_consult')}
                 <ArrowRight size={16} />
               </Link>
             )}

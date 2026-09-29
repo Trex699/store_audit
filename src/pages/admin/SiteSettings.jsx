@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { Save, CheckCircle2 } from 'lucide-react'
 import { useApp } from '../../context/AppContext.jsx'
+import { useLanguage } from '../../context/LanguageContext.jsx'
 
 export default function SiteSettings() {
   const { siteSettings, updateSiteSettings } = useApp()
+  const { t } = useLanguage()
   const [formData, setFormData] = useState(siteSettings)
   const [isSaving, setIsSaving] = useState(false)
   const [isSaved, setIsSaved] = useState(false)
@@ -24,22 +26,22 @@ export default function SiteSettings() {
 
   return (
     <div className="max-w-4xl">
-      <h2 className="text-2xl font-bold text-white mb-6">ตั้งค่าเว็บไซต์</h2>
+      <h2 className="text-2xl font-bold text-white mb-6">{t('admin_settings')}</h2>
 
       {isSaved && (
         <div className="flex items-center gap-2 p-4 rounded-lg bg-green-500/10 border border-green-500/30 text-green-400 mb-6">
           <CheckCircle2 size={20} />
-          บันทึกการตั้งค่าเรียบร้อยแล้ว
+          {t('admin_saved')}
         </div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Basic Info */}
         <div className="bg-dark-700 rounded-xl p-6 border border-dark-500">
-          <h3 className="text-lg font-semibold text-white mb-4">ข้อมูลพื้นฐาน</h3>
+          <h3 className="text-lg font-semibold text-white mb-4">{t('admin_basic_info')}</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm text-gray-400 mb-2">ชื่อเว็บไซต์</label>
+              <label className="block text-sm text-gray-400 mb-2">{t('admin_site_name')}</label>
               <input
                 type="text"
                 name="siteName"
@@ -49,7 +51,7 @@ export default function SiteSettings() {
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-400 mb-2">ชื่อใน Hero Section</label>
+              <label className="block text-sm text-gray-400 mb-2">{t('admin_hero_title')}</label>
               <input
                 type="text"
                 name="heroTitle"
@@ -59,7 +61,7 @@ export default function SiteSettings() {
               />
             </div>
             <div className="md:col-span-2">
-              <label className="block text-sm text-gray-400 mb-2">คำโปรยใต้ Hero</label>
+              <label className="block text-sm text-gray-400 mb-2">{t('admin_hero_subtitle')}</label>
               <input
                 type="text"
                 name="heroSubtitle"
@@ -69,7 +71,7 @@ export default function SiteSettings() {
               />
             </div>
             <div className="md:col-span-2">
-              <label className="block text-sm text-gray-400 mb-2">รายละเอียด Hero</label>
+              <label className="block text-sm text-gray-400 mb-2">{t('admin_hero_description')}</label>
               <textarea
                 name="heroDescription"
                 value={formData.heroDescription}
@@ -78,15 +80,26 @@ export default function SiteSettings() {
                 className="w-full px-4 py-2 rounded-lg bg-dark-600 border border-dark-500 text-white focus:border-gold-500 outline-none resize-none"
               />
             </div>
+            <div className="md:col-span-2">
+              <label className="block text-sm text-gray-400 mb-2">{t('admin_profile_image_url')}</label>
+              <input
+                type="text"
+                name="profileImage"
+                value={formData.profileImage || ''}
+                onChange={handleChange}
+                placeholder="https://example.com/image.jpg"
+                className="w-full px-4 py-2 rounded-lg bg-dark-600 border border-dark-500 text-white focus:border-gold-500 outline-none"
+              />
+            </div>
           </div>
         </div>
 
         {/* Contact Info */}
         <div className="bg-dark-700 rounded-xl p-6 border border-dark-500">
-          <h3 className="text-lg font-semibold text-white mb-4">ข้อมูลติดต่อ</h3>
+          <h3 className="text-lg font-semibold text-white mb-4">{t('admin_contact_info')}</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm text-gray-400 mb-2">เบอร์โทรศัพท์</label>
+              <label className="block text-sm text-gray-400 mb-2">{t('admin_phone')}</label>
               <input
                 type="text"
                 name="contactPhone"
@@ -96,7 +109,7 @@ export default function SiteSettings() {
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-400 mb-2">อีเมล</label>
+              <label className="block text-sm text-gray-400 mb-2">{t('admin_email')}</label>
               <input
                 type="email"
                 name="contactEmail"
@@ -106,7 +119,7 @@ export default function SiteSettings() {
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-400 mb-2">LINE ID</label>
+              <label className="block text-sm text-gray-400 mb-2">{t('admin_line_id')}</label>
               <input
                 type="text"
                 name="lineId"
@@ -116,7 +129,7 @@ export default function SiteSettings() {
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-400 mb-2">LINE URL</label>
+              <label className="block text-sm text-gray-400 mb-2">{t('admin_line_url')}</label>
               <input
                 type="text"
                 name="lineUrl"
@@ -126,7 +139,7 @@ export default function SiteSettings() {
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-400 mb-2">Facebook URL</label>
+              <label className="block text-sm text-gray-400 mb-2">{t('admin_facebook')}</label>
               <input
                 type="text"
                 name="facebookUrl"
@@ -136,7 +149,7 @@ export default function SiteSettings() {
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-400 mb-2">TikTok URL</label>
+              <label className="block text-sm text-gray-400 mb-2">{t('admin_tiktok')}</label>
               <input
                 type="text"
                 name="tiktokUrl"
@@ -146,7 +159,7 @@ export default function SiteSettings() {
               />
             </div>
             <div className="md:col-span-2">
-              <label className="block text-sm text-gray-400 mb-2">เวลาทำการ</label>
+              <label className="block text-sm text-gray-400 mb-2">{t('admin_working_hours')}</label>
               <input
                 type="text"
                 name="workingHours"
@@ -166,12 +179,12 @@ export default function SiteSettings() {
           {isSaving ? (
             <>
               <div className="w-5 h-5 border-2 border-dark-700 border-t-transparent rounded-full animate-spin" />
-              กำลังบันทึก...
+              {t('admin_saving')}
             </>
           ) : (
             <>
               <Save size={20} />
-              บันทึกการตั้งค่า
+              {t('admin_save')}
             </>
           )}
         </button>

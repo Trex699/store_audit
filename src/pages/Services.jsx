@@ -3,10 +3,13 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { CheckCircle2, ArrowRight, Eye } from 'lucide-react'
 import { useApp } from '../context/AppContext.jsx'
+import { useLanguage } from '../context/LanguageContext.jsx'
 import { services } from '../data/sampleData.js'
 import SectionHeading from '../components/SectionHeading.jsx'
 
 function PageHero() {
+  const { t } = useLanguage()
+
   return (
     <section className="py-20 bg-gradient-to-br from-dark-800 via-dark-700 to-dark-600">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -16,10 +19,10 @@ function PageHero() {
           transition={{ duration: 0.6 }}
         >
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            บริการ & <span className="text-gold-500">ผลงาน</span>
+            {t('services_page_title')} & <span className="text-gold-500">ผลงาน</span>
           </h1>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            แพ็กเกจบริการตรวจสอบที่ตอบโจทย์ทุกความต้องการ พร้อมผลงานจริงที่พิสูจน์คุณภาพ
+            {t('services_page_subtitle')}
           </p>
         </motion.div>
       </div>
@@ -28,13 +31,15 @@ function PageHero() {
 }
 
 function ServicesSection() {
+  const { t } = useLanguage()
+
   return (
     <section className="py-20 bg-white dark:bg-dark-700">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          title="แพ็กเกจบริการ"
-          highlight="Services"
-          subtitle="เลือกแพ็กเกจที่เหมาะกับความต้องการของคุณ"
+          title={t('services_page_title')}
+          highlight={t('services_page_highlight')}
+          subtitle={t('services_page_subtitle')}
         />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -86,6 +91,7 @@ function ServicesSection() {
 
 function PortfolioSection() {
   const { portfolioProjects } = useApp()
+  const { t } = useLanguage()
   const [selectedProject, setSelectedProject] = useState(null)
 
   const publishedProjects = portfolioProjects.filter((p) => p.isPublished)
@@ -94,9 +100,9 @@ function PortfolioSection() {
     <section className="py-20 bg-gray-50 dark:bg-dark-600">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          title="ผลงานที่ภูมิใจ"
+          title={t('services_portfolio')}
           highlight="Case Studies"
-          subtitle="ตัวอย่างผลงานการปรับปรุงร้านค้า (เซ็นเซอร์ชื่อแบรนด์เพื่อความเป็นส่วนตัว)"
+          subtitle={t('services_portfolio_subtitle')}
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -148,6 +154,8 @@ function PortfolioSection() {
 }
 
 function CTASection() {
+  const { t } = useLanguage()
+
   return (
     <section className="py-20 bg-gold-500">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -157,16 +165,16 @@ function CTASection() {
           viewport={{ once: true }}
         >
           <h2 className="text-3xl md:text-4xl font-bold text-dark-700 mb-4">
-            พร้อมเริ่มต้นแล้วหรือยัง?
+            {t('services_cta')}
           </h2>
           <p className="text-dark-600 mb-8 max-w-2xl mx-auto">
-            ติดต่อมาปรึกษาฟรี เราจะช่วยให้ร้านค้าของคุณผ่านเกณฑ์ตรวจสอบและปลอดภัยจากปัญหา
+            {t('services_cta_subtitle')}
           </p>
           <Link
             to="/contact"
             className="inline-flex items-center gap-2 bg-dark-700 text-white px-8 py-4 rounded-lg font-semibold hover:bg-dark-600 transition-colors"
           >
-            ติดต่อเราเลย
+            {t('nav_contact')}
             <ArrowRight size={20} />
           </Link>
         </motion.div>

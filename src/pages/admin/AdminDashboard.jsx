@@ -12,24 +12,29 @@ import {
   Eye,
   Menu,
   X,
+  Building2,
 } from 'lucide-react'
 import { useApp } from '../../context/AppContext.jsx'
+import { useLanguage } from '../../context/LanguageContext.jsx'
 import SiteSettings from './SiteSettings.jsx'
 import ArticlesManager from './ArticlesManager.jsx'
 import TestimonialsManager from './TestimonialsManager.jsx'
 import PortfolioManager from './PortfolioManager.jsx'
 import InboxViewer from './InboxViewer.jsx'
+import CompanySettings from './CompanySettings.jsx'
 
 const menuItems = [
   { id: 'settings', label: 'ตั้งค่าเว็บไซต์', icon: Settings },
   { id: 'articles', label: 'จัดการบทความ', icon: FileText },
   { id: 'testimonials', label: 'จัดการรีวิว', icon: MessageSquare },
   { id: 'portfolio', label: 'จัดการผลงาน', icon: Image },
+  { id: 'company', label: 'ข้อมูลบริษัท', icon: Building2 },
   { id: 'inbox', label: 'กล่องข้อความ', icon: Inbox },
 ]
 
 export default function AdminDashboard() {
   const { isAuthenticated, logout, contactMessages } = useApp()
+  const { t } = useLanguage()
   const [activeTab, setActiveTab] = useState('settings')
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const navigate = useNavigate()
@@ -61,6 +66,8 @@ export default function AdminDashboard() {
         return <TestimonialsManager />
       case 'portfolio':
         return <PortfolioManager />
+      case 'company':
+        return <CompanySettings />
       case 'inbox':
         return <InboxViewer />
       default:
@@ -84,7 +91,7 @@ export default function AdminDashboard() {
               <div className="w-8 h-8 bg-gold-500 rounded-lg flex items-center justify-center">
                 <Shield className="text-dark-700" size={18} />
               </div>
-              <span className="text-white font-semibold">Admin Dashboard</span>
+              <span className="text-white font-semibold">{t('admin_dashboard')}</span>
             </div>
           </div>
 
@@ -94,14 +101,14 @@ export default function AdminDashboard() {
               className="flex items-center gap-2 px-3 py-2 text-gray-400 hover:text-white transition-colors"
             >
               <Eye size={18} />
-              <span className="hidden sm:inline">ดูเว็บไซต์</span>
+              <span className="hidden sm:inline">{t('admin_view_site')}</span>
             </Link>
             <button
               onClick={handleLogout}
               className="flex items-center gap-2 px-3 py-2 text-gray-400 hover:text-red-400 transition-colors"
             >
               <LogOut size={18} />
-              <span className="hidden sm:inline">ออกจากระบบ</span>
+              <span className="hidden sm:inline">{t('admin_logout')}</span>
             </button>
           </div>
         </div>

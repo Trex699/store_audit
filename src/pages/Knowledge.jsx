@@ -3,9 +3,12 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowRight, Calendar, Clock, Tag } from 'lucide-react'
 import { useApp } from '../context/AppContext.jsx'
+import { useLanguage } from '../context/LanguageContext.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
 
 function PageHero() {
+  const { t } = useLanguage()
+
   return (
     <section className="py-20 bg-gradient-to-br from-dark-800 via-dark-700 to-dark-600">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -15,10 +18,10 @@ function PageHero() {
           transition={{ duration: 0.6 }}
         >
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            คลัง<span className="text-gold-500">ความรู้</span>
+            {t('knowledge_title')}
           </h1>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            บทความเทคนิคการทำ Store Audit เพื่อให้คุณเข้าใจและป้องกันปัญหาเองได้
+            {t('knowledge_subtitle')}
           </p>
         </motion.div>
       </div>
@@ -27,6 +30,8 @@ function PageHero() {
 }
 
 function ArticleCard({ article, index }) {
+  const { t } = useLanguage()
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -63,7 +68,7 @@ function ArticleCard({ article, index }) {
           to={`/knowledge/${article.slug}`}
           className="inline-flex items-center gap-2 text-gold-500 font-medium text-sm hover:text-gold-400 transition-colors"
         >
-          อ่านเพิ่มเติม
+          {t('knowledge_read_more')}
           <ArrowRight size={16} />
         </Link>
       </div>
@@ -73,15 +78,16 @@ function ArticleCard({ article, index }) {
 
 function ArticlesList() {
   const { articles } = useApp()
+  const { t } = useLanguage()
   const publishedArticles = articles.filter((a) => a.isPublished)
 
   return (
     <section className="py-20 bg-white dark:bg-dark-700">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          title="บทความล่าสุด"
-          highlight="Latest Articles"
-          subtitle="ความรู้เทคนิคการทำ Store Audit อัปเดตล่าสุด"
+          title={t('knowledge_title')}
+          highlight={t('knowledge_highlight')}
+          subtitle={t('knowledge_subtitle')}
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -96,6 +102,7 @@ function ArticlesList() {
 
 function ArticleDetail({ slug }) {
   const { articles } = useApp()
+  const { t } = useLanguage()
   const article = articles.find((a) => a.slug === slug)
 
   if (!article) {
@@ -106,7 +113,7 @@ function ArticleDetail({ slug }) {
             ไม่พบบทความ
           </h2>
           <Link to="/knowledge" className="text-gold-500 hover:text-gold-400">
-            กลับไปหน้าคลังความรู้
+            {t('knowledge_back')}
           </Link>
         </div>
       </section>
@@ -128,7 +135,7 @@ function ArticleDetail({ slug }) {
               className="inline-flex items-center gap-2 text-gold-500 text-sm mb-6 hover:text-gold-400 transition-colors"
             >
               <ArrowRight size={16} className="rotate-180" />
-              กลับไปหน้าคลังความรู้
+              {t('knowledge_back')}
             </Link>
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
               {article.title}
@@ -210,6 +217,8 @@ function ArticleDetail({ slug }) {
 }
 
 function CTASection() {
+  const { t } = useLanguage()
+
   return (
     <section className="py-20 bg-gray-50 dark:bg-dark-600">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -228,7 +237,7 @@ function CTASection() {
             to="/contact"
             className="inline-flex items-center gap-2 bg-gold-500 text-dark-700 px-8 py-4 rounded-lg font-semibold hover:bg-gold-400 transition-colors"
           >
-            ติดต่อเรา
+            {t('nav_contact')}
             <ArrowRight size={20} />
           </Link>
         </motion.div>

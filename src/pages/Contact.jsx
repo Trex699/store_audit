@@ -10,9 +10,12 @@ import {
   CheckCircle2,
 } from 'lucide-react'
 import { useApp } from '../context/AppContext.jsx'
+import { useLanguage } from '../context/LanguageContext.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
 
 function PageHero() {
+  const { t } = useLanguage()
+
   return (
     <section className="py-20 bg-gradient-to-br from-dark-800 via-dark-700 to-dark-600">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -22,10 +25,10 @@ function PageHero() {
           transition={{ duration: 0.6 }}
         >
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            ติดต่อ<span className="text-gold-500">เรา</span>
+            {t('contact_title')}<span className="text-gold-500">เรา</span>
           </h1>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            พร้อมช่วยเหลือคุณ ติดต่อมาได้ทุกช่องทาง เราจะตอบกลับภายใน 24 ชั่วโมง
+            {t('contact_subtitle')}
           </p>
         </motion.div>
       </div>
@@ -35,6 +38,7 @@ function PageHero() {
 
 function ContactForm() {
   const { addContactMessage } = useApp()
+  const { t } = useLanguage()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -86,7 +90,7 @@ function ContactForm() {
       >
         <CheckCircle2 className="w-16 h-16 text-green-500 mx-auto mb-4" />
         <h3 className="text-xl font-semibold text-green-700 dark:text-green-400 mb-2">
-          ส่งข้อความสำเร็จ!
+          {t('contact_success')}
         </h3>
         <p className="text-green-600 dark:text-green-500 mb-6">
           ขอบคุณที่ติดต่อเรา เราจะตอบกลับภายใน 24 ชั่วโมง
@@ -112,7 +116,7 @@ function ContactForm() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            ชื่อ-นามสกุล *
+            {t('contact_name')} *
           </label>
           <input
             type="text"
@@ -120,12 +124,12 @@ function ContactForm() {
             value={formData.name}
             onChange={handleChange}
             className="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-dark-600 border border-gray-200 dark:border-dark-500 text-gray-900 dark:text-white focus:border-gold-500 focus:ring-1 focus:ring-gold-500 outline-none transition-colors"
-            placeholder="กรุณากรอกชื่อ"
+            placeholder={t('contact_name_placeholder')}
           />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            อีเมล *
+            {t('contact_email')} *
           </label>
           <input
             type="email"
@@ -133,7 +137,7 @@ function ContactForm() {
             value={formData.email}
             onChange={handleChange}
             className="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-dark-600 border border-gray-200 dark:border-dark-500 text-gray-900 dark:text-white focus:border-gold-500 focus:ring-1 focus:ring-gold-500 outline-none transition-colors"
-            placeholder="example@email.com"
+            placeholder={t('contact_email_placeholder')}
           />
         </div>
       </div>
@@ -141,7 +145,7 @@ function ContactForm() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            เบอร์โทรศัพท์
+            {t('admin_phone')}
           </label>
           <input
             type="tel"
@@ -173,7 +177,7 @@ function ContactForm() {
 
       <div>
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-          ข้อความ *
+          {t('contact_message')} *
         </label>
         <textarea
           name="message"
@@ -181,7 +185,7 @@ function ContactForm() {
           onChange={handleChange}
           rows={5}
           className="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-dark-600 border border-gray-200 dark:border-dark-500 text-gray-900 dark:text-white focus:border-gold-500 focus:ring-1 focus:ring-gold-500 outline-none transition-colors resize-none"
-          placeholder="กรุณากรอกข้อความ..."
+          placeholder={t('contact_message_placeholder')}
         />
       </div>
 
@@ -193,12 +197,12 @@ function ContactForm() {
         {isSubmitting ? (
           <>
             <div className="w-5 h-5 border-2 border-dark-700 border-t-transparent rounded-full animate-spin" />
-            กำลังส่ง...
+            {t('contact_sending')}
           </>
         ) : (
           <>
             <Send size={20} />
-            ส่งข้อความ
+            {t('contact_send')}
           </>
         )}
       </button>
@@ -208,17 +212,18 @@ function ContactForm() {
 
 function ContactInfo() {
   const { siteSettings } = useApp()
+  const { t } = useLanguage()
 
   const contactMethods = [
     {
       icon: Phone,
-      title: 'โทรศัพท์',
+      title: t('footer_phone'),
       value: siteSettings.contactPhone,
       link: `tel:${siteSettings.contactPhone}`,
     },
     {
       icon: Mail,
-      title: 'อีเมล',
+      title: t('footer_email'),
       value: siteSettings.contactEmail,
       link: `mailto:${siteSettings.contactEmail}`,
     },
@@ -230,7 +235,7 @@ function ContactInfo() {
     },
     {
       icon: Clock,
-      title: 'เวลาทำการ',
+      title: t('footer_hours'),
       value: siteSettings.workingHours,
       link: null,
     },
@@ -273,7 +278,7 @@ function ContactInfo() {
       {/* Social Links */}
       <div className="p-6 rounded-lg bg-gray-50 dark:bg-dark-600">
         <h3 className="font-medium text-gray-900 dark:text-white mb-4">
-          ติดตามเรา
+          {t('contact_follow')}
         </h3>
         <div className="flex gap-4">
           <a
@@ -303,6 +308,8 @@ function ContactInfo() {
 }
 
 export default function Contact() {
+  const { t } = useLanguage()
+
   return (
     <>
       <PageHero />
@@ -310,7 +317,7 @@ export default function Contact() {
       <section className="py-20 bg-white dark:bg-dark-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
-            title="ส่งข้อความถึงเรา"
+            title={t('contact_form_title')}
             highlight="Get in Touch"
             subtitle="เลือกช่องทางที่สะดวกสำหรับคุณ"
           />

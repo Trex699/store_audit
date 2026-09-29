@@ -1,20 +1,23 @@
 import { useState } from 'react'
 import { Link, Outlet, useLocation } from 'react-router-dom'
-import { Menu, X, Shield } from 'lucide-react'
+import { Menu, X, Shield, Globe } from 'lucide-react'
 import { useApp } from '../context/AppContext.jsx'
+import { useLanguage } from '../context/LanguageContext.jsx'
 import ThemeToggle from './ThemeToggle.jsx'
 
 const navLinks = [
-  { path: '/', label: 'หน้าแรก' },
-  { path: '/about', label: 'เกี่ยวกับ' },
-  { path: '/services', label: 'บริการ' },
-  { path: '/knowledge', label: 'คลังความรู้' },
-  { path: '/contact', label: 'ติดต่อ' },
+  { path: '/', key: 'nav_home' },
+  { path: '/about', key: 'nav_about' },
+  { path: '/services', key: 'nav_services' },
+  { path: '/knowledge', key: 'nav_knowledge' },
+  { path: '/contact', key: 'nav_contact' },
+  { path: '/company', key: 'nav_company' },
 ]
 
 export default function Layout() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { siteSettings } = useApp()
+  const { t, lang, toggleLang } = useLanguage()
   const location = useLocation()
 
   const isActive = (path) => location.pathname === path
@@ -47,14 +50,17 @@ export default function Layout() {
                       : 'text-gray-700 dark:text-gray-300 hover:text-gold-500'
                   }`}
                 >
-                  {link.label}
+                  {t(link.key)}
                 </Link>
               ))}
+              <LanguageToggle />
               <ThemeToggle />
+              <ProfileImage />
             </div>
 
             {/* Mobile Menu Button */}
             <div className="md:hidden flex items-center gap-2">
+              <LanguageToggle />
               <ThemeToggle />
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -81,9 +87,12 @@ export default function Layout() {
                       : 'text-gray-700 dark:text-gray-300 hover:text-gold-500'
                   }`}
                 >
-                  {link.label}
+                  {t(link.key)}
                 </Link>
               ))}
+              <div className="pt-2 border-t border-gray-200 dark:border-dark-500">
+                <ProfileImage />
+              </div>
             </div>
           </div>
         )}
@@ -109,13 +118,13 @@ export default function Layout() {
                 </span>
               </div>
               <p className="text-sm">
-                เจ้าหน้าที่กำกับดูแลกฎระเบียบและความปลอดภัยบนแพลตฟอร์มตลาดออนไลน์
+                {t('about_subtitle')}
               </p>
             </div>
 
             {/* Quick Links */}
             <div>
-              <h3 className="text-white font-semibold mb-4">ลิงก์ด่วน</h3>
+              <h3 className="text-white font-semibold mb-4">{t('footer_quick_links')}</h3>
               <div className="space-y-2">
                 {navLinks.map((link) => (
                   <Link
@@ -123,7 +132,7 @@ export default function Layout() {
                     to={link.path}
                     className="block text-sm hover:text-gold-500 transition-colors"
                   >
-                    {link.label}
+                    {t(link.key)}
                   </Link>
                 ))}
               </div>
@@ -131,21 +140,53 @@ export default function Layout() {
 
             {/* Contact */}
             <div>
-              <h3 className="text-white font-semibold mb-4">ติดต่อ</h3>
+              <h3 className="text-white font-semibold mb-4">{t('footer_contact')}</h3>
               <div className="space-y-2 text-sm">
-                <p>โทร: {siteSettings.contactPhone}</p>
-                <p>อีเมล: {siteSettings.contactEmail}</p>
-                <p>LINE: {siteSettings.lineId}</p>
-                <p>เวลาทำการ: {siteSettings.workingHours}</p>
+                <p>{t('footer_phone')}: {siteSettings.contactPhone}</p>
+                <p>{t('footer_email')}: {siteSettings.contactEmail}</p>
+                <p>{t('footer_line')}: {siteSettings.lineId}</p>
+                <p>{t('footer_hours')}: {siteSettings.workingHours}</p>
               </div>
             </div>
           </div>
 
           <div className="border-t border-dark-500 mt-8 pt-8 text-center text-sm">
-            <p>&copy; {new Date().getFullYear()} {siteSettings.siteName}. สงวนลิขสิทธิ์</p>
+            <p>&copy; {new Date().getFullYear()} {siteSettings.siteName}. {t('footer_rights')}</p>
           </div>
         </div>
       </footer>
     </div>
+  )
+}
+
+function LanguageToggle() {
+  const { t, lang, toggleLang } = useLanguage()
+
+  return (
+    <button
+      onClick={toggleLang}
+      className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-gold-500/10 text-gold-500 hover:bg-gold-500/20 transition-colors text-sm font-medium"
+      aria-label="Switch language"
+    >
+      <Globe size={16} />
+      {lang === 'th' ? t('lang_en') : t('lang_th')}
+    </button>
+  )
+}
+
+function ProfileImage() {
+  const { siteSettings } = useApp()
+  const profileImage = siteSettings.profileImage
+
+  if (!profileImage) {
+    return null
+  }
+
+  return (
+    <img
+      src={profileImage}
+      alt="Profile"
+      className="w-8 h-8 rounded-full object-cover border-2 border-gold-500/30"
+    />
   )
 }
