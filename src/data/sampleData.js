@@ -3,7 +3,7 @@
 
 export const companyInfo = {
   companyName: 'QA Store Audit Co., Ltd.',
-  address: '123 อาคารสำนักงาน ชั้น 10 ถนนสุขุมวิท แขวงคลองเตย เขตคลองเตย กรุงเทพฯ 10110',
+  address: '123 อาคารสำนักงาน ชั้น 10 ถนนสุขุมวิท แขวงคลองเตย เขตคลองเตย กรุงเทพฯ 11441',
   addressDetail: 'สำนักงานใหญ่',
   phone: '02-123-4567',
   email: 'info@qastoreaudit.com',
