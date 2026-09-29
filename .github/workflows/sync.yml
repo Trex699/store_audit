@@ -1,0 +1,20 @@
+name: Sync to Personal GitHub
+
+on:
+  push:
+    branches:
+      - main 
+
+jobs:
+  git-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Push to Personal Repository
+        run: |
+          git remote add personal https://${{ secrets.PERSONAL_GITHUB_TOKEN }}@github.com/Trex1441/YOUR_PERSONAL_REPO_NAME.git
+          git push personal main --force
